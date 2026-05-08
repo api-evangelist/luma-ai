@@ -1,0 +1,29 @@
+aid: luma-ai
+url: https://raw.githubusercontent.com/api-evangelist/luma-ai/refs/heads/main/apis.yml
+name: Luma AI
+x-type: company
+description: >-
+  Luma AI builds generative video (Dream Machine / Ray) and 3D capture models. APIs cover text-to-video, image-to-video, and 3D scene generation.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - AI
+  - Video Generation
+  - 3D
+  - Dream Machine
+  - Multimodal
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://lumalabs.ai/
+  - type: Plans
+    url: plans/luma-ai-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/luma-ai-rate-limits.yml
+  - type: FinOps
+    url: finops/luma-ai-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
