@@ -3,21 +3,68 @@ url: https://raw.githubusercontent.com/api-evangelist/luma-ai/refs/heads/main/ap
 name: Luma AI
 x-type: company
 description: >-
-  Luma AI builds generative video (Dream Machine / Ray) and 3D capture models. APIs cover text-to-video, image-to-video, and 3D scene generation.
+  Luma AI builds generative video (Dream Machine / Ray) and image (Photon) models, plus
+  agent and 3D capture products. The Dream Machine API exposes REST endpoints for video and
+  image generation with submit + poll semantics, an agent uni-1 model, and SDKs for Python,
+  JavaScript, Go, and a CLI. Pricing is per-second for video and per-request or per-pixel
+  for images.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
   - Video Generation
+  - Image Generation
   - 3D
   - Dream Machine
   - Multimodal
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: luma-ai:dream-machine
+    name: Luma Dream Machine API
+    description: >-
+      REST API for video (Ray series) and image (Photon) generation. Submit a generation
+      request, then poll for status. Documentation at https://docs.lumalabs.ai/. Auth via
+      API key from https://lumalabs.ai/dream-machine/api/keys.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.lumalabs.ai/
+    baseURL: https://api.lumalabs.ai/dream-machine/v1
+    tags:
+      - Video Generation
+      - Image Generation
+      - Ray
+      - Photon
+      - Dream Machine
+    properties:
+      - type: Documentation
+        url: https://docs.lumalabs.ai/
+      - type: SignUp
+        url: https://lumalabs.ai/dream-machine/api/keys
+      - type: Pricing
+        url: https://lumalabs.ai/dream-machine/api/billing/overview
+      - type: Status
+        url: https://status.lumalabs.ai/
+  - aid: luma-ai:agents-uni
+    name: Luma Agents API (uni-1)
+    description: >-
+      Agent-style image generation/editing with a reasoning endpoint and a generation
+      endpoint. Uses /v1/generations submit and /v1/generations/{generation_id} polling
+      pattern at https://agents.lumalabs.ai/v1.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.agents.lumalabs.ai/
+    baseURL: https://agents.lumalabs.ai/v1
+    tags:
+      - Agents
+      - Image Generation
+      - Image Editing
+    properties:
+      - type: Documentation
+        url: https://docs.agents.lumalabs.ai/
 common:
   - type: Website
     url: https://lumalabs.ai/
+  - type: Documentation
+    url: https://docs.lumalabs.ai/
   - type: Plans
     url: plans/luma-ai-plans-pricing.yml
   - type: RateLimits

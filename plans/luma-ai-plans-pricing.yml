@@ -5,37 +5,111 @@ provider: Luma AI
 providerId: luma-ai
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - Video Generation
+- Image Generation
 - 3D
 - Dream Machine
 - Multimodal
 - Plans
-description: Placeholder plans/pricing artifact for Luma AI. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled.
+description: >-
+  Luma's Dream Machine API uses pay-as-you-go pricing for video and image generation, plus
+  provisioned-throughput Scale plans. Reported public rates as of May 2026 include Ray-2
+  video at ~$0.08/second and uni-1 image generation at ~$0.04/request (2048px). Provisioned
+  throughput Scale plans run $2,100–$3,800/month for committed capacity (8-unit minimum).
+notes: API credits are separate from Dream Machine consumer credits. Confirm exact unit costs in the Dream Machine API billing dashboard before contracting.
 sources:
-- https://lumalabs.ai/
+- https://lumalabs.ai/dream-machine/api
+- https://docs.lumalabs.ai/
+- https://docs.agents.lumalabs.ai/
 plans:
-- id: luma-ai-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers once pricing is reconciled.
+- id: luma-ai-build
+  name: Build (Pay-as-you-go)
+  type: usage
+  description: Per-call/per-second consumption pricing with prepaid API credits.
   entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
+  - label: Ray-2 Video
+    name: ray2_video
+    type: per_unit
+    metric: second
     limit: -1
     timeFrame: usage
     geo: global
     unit: 1
-    price: see https://lumalabs.ai/
+    price: 0.08 USD/second
     userMultiplied: false
-  elements:
-  - name: Pending Reconciliation
+  - label: Uni-1 Image (2048px)
+    name: uni1_image
+    type: per_unit
+    metric: request
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: 0.0404 USD/request
+    userMultiplied: false
+  - label: Uni-1 Image Edit (2048px)
+    name: uni1_edit
+    type: per_unit
+    metric: request
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: 0.0434 USD/request
+    userMultiplied: false
+  - label: Uni-1 with Image References
+    name: uni1_image_refs
+    type: per_unit
+    metric: request
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: 0.0434 - 0.0644 USD/request (varies by reference count)
+    userMultiplied: false
+  - label: Photon Image (per million pixels)
+    name: photon_pixels
+    type: per_unit
+    metric: million_pixels
+    limit: -1
+    timeFrame: usage
+    geo: global
+    unit: 1
+    price: 0.32 USD per million pixels (Photon API)
+    userMultiplied: false
+- id: luma-ai-scale
+  name: Scale (Provisioned Throughput)
+  type: subscription
+  description: Reserved capacity at fixed monthly rates with 8-unit minimum.
+  entries:
+  - label: Provisioned Capacity Unit
+    name: provisioned_unit
+    type: flat
+    metric: month
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 2100 - 3800 USD/month per unit (8-unit minimum)
+    userMultiplied: false
+- id: luma-ai-enterprise
+  name: Enterprise
+  type: enterprise
+  description: Custom contracts with negotiated rates and SLAs.
+  entries:
+  - label: Enterprise Contract
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: annual
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

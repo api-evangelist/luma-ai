@@ -5,20 +5,26 @@ provider: Luma AI
 providerId: luma-ai
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - Video Generation
+- Image Generation
 - 3D
 - Dream Machine
 - Multimodal
 - FinOps
 - Cost Management
 - FOCUS
-description: FOCUS-aligned FinOps placeholder for Luma AI. Pipeline will replace with real billing details.
-notes: Initial scaffold — billing model has not yet been reconciled.
+description: >-
+  FOCUS-aligned FinOps view of Luma AI Dream Machine API. Build-tier is per-second video
+  ($0.08/s for Ray-2) and per-request/per-pixel image generation. Scale-tier is provisioned
+  throughput at $2,100-$3,800/month per unit (8-unit minimum). Note that Dream Machine
+  consumer credits do not transfer to API.
+notes: Right-size between Build (PAYG) and Scale (provisioned) based on predictable monthly burn.
 sources:
-- https://lumalabs.ai/
+- https://lumalabs.ai/dream-machine/api
+- https://docs.lumalabs.ai/
 - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
@@ -29,7 +35,7 @@ alignedWith:
 publisherName: Luma AI
 serviceCategory: AI
 billingModel:
-  pricingCategory: To Be Reconciled
+  pricingCategory: Usage + Provisioned Throughput
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
@@ -37,7 +43,7 @@ billingModel:
   - Purchase
   - Adjustment
 focusColumns:
-  ServiceName: Luma AI
+  ServiceName: Luma Dream Machine API
   ServiceCategory: AI
   ProviderName: Luma AI
   PublisherName: Luma AI
@@ -45,22 +51,42 @@ focusColumns:
   BillingCurrency: USD
   ChargeCategory: Usage
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation.
-  unit: varies
+- name: video_seconds
+  description: Seconds of generated video (Ray series).
+  unit: second
   aggregation: sum
   dimensions:
   - account
-  - resource
+  - model
+- name: image_requests
+  description: Per-request image generation/edit calls (uni-1 Photon).
+  unit: request
+  aggregation: sum
+  dimensions:
+  - account
+  - model
+  - operation
+- name: image_pixels
+  description: Million-pixel-based Photon image billing.
+  unit: million_pixels
+  aggregation: sum
+  dimensions:
+  - account
+- name: provisioned_units
+  description: Reserved capacity units on Scale plans.
+  unit: unit-month
+  aggregation: max
+  dimensions:
+  - account
 principles:
 - name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
+  description: Track video seconds and image requests in Luma billing dashboard.
 - name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
+  description: Tag generations to creative project / app surface.
 - name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
+  description: Pre-purchase Scale capacity if monthly Build burn exceeds Scale break-even.
 - name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  description: Assign budget owners for Build (variable) vs Scale (committed) allocations.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

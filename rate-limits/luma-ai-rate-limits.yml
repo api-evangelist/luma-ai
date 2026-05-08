@@ -5,31 +5,46 @@ provider: Luma AI
 providerId: luma-ai
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: partial
 tags:
 - AI
 - Video Generation
+- Image Generation
 - 3D
 - Dream Machine
 - Multimodal
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Luma AI. Replace with real limits once researched.
-notes: Initial scaffold — limits have not yet been reconciled.
+description: >-
+  Dream Machine API uses async submit + poll semantics; HTTP RPS limits are not publicly
+  documented. Provisioned-throughput Scale plans purchase reserved generation capacity in
+  units (8-unit minimum). Build-tier customers share elastic capacity with throttling under
+  load.
+notes: Reserve capacity via Scale plans for predictable throughput; Build-tier capacity is shared.
 sources:
-- https://lumalabs.ai/
+- https://lumalabs.ai/dream-machine/api
+- https://docs.lumalabs.ai/
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: HTTP Requests
   scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  metric: requests
+  limit: not publicly documented
+  notes: Standard 429 backoff applies.
+- name: Provisioned Capacity Unit Minimum
+  scope: account
+  metric: capacity_units
+  limit: 8
+  notes: Scale plans require minimum 8 provisioned units.
 policies:
 - name: Backoff Strategy
   description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+- name: Async Polling
+  description: Submit generation, then poll /v1/generations/{id} until status reaches completed.
+- name: Capacity Planning
+  description: Move to Scale plan when predictable throughput is required for production workloads.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
