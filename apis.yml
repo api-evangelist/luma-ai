@@ -1,7 +1,7 @@
 aid: luma-ai
 url: https://raw.githubusercontent.com/api-evangelist/luma-ai/refs/heads/main/apis.yml
 name: Luma AI
-x-type: company
+kind: company
 description: >-
   Luma AI builds generative video (Dream Machine / Ray) and image (Photon) models, plus
   agent and 3D capture products. The Dream Machine API exposes REST endpoints for video and
@@ -42,7 +42,7 @@ apis:
         url: https://lumalabs.ai/dream-machine/api/keys
       - type: Pricing
         url: https://lumalabs.ai/dream-machine/api/billing/overview
-      - type: Status
+      - type: StatusPage
         url: https://status.lumalabs.ai/
   - aid: luma-ai:agents-uni
     name: Luma Agents API (uni-1)
