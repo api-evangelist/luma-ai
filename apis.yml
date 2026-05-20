@@ -61,6 +61,10 @@ apis:
       - type: Documentation
         url: https://docs.agents.lumalabs.ai/
 common:
+  - type: GitHubOrganization
+    url: https://github.com/lumalabs
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/luma-ai
   - type: Website
     url: https://lumalabs.ai/
   - type: Documentation
