@@ -75,6 +75,8 @@ common:
     url: rate-limits/luma-ai-rate-limits.yml
   - type: FinOps
     url: finops/luma-ai-finops.yml
+  - type: LLMsTxt
+    url: https://docs.lumalabs.ai/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
