@@ -17,7 +17,7 @@ tags:
   - Dream Machine
   - Multimodal
 created: '2026-05-08'
-modified: '2026-05-08'
+modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
   - aid: luma-ai:dream-machine
@@ -44,6 +44,8 @@ apis:
         url: https://lumalabs.ai/dream-machine/api/billing/overview
       - type: StatusPage
         url: https://status.lumalabs.ai/
+      - type: AsyncAPI
+        url: asyncapi/luma-ai-callback-asyncapi.yml
   - aid: luma-ai:agents-uni
     name: Luma Agents API (uni-1)
     description: >-

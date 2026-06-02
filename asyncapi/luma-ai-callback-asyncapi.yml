@@ -1,0 +1,250 @@
+asyncapi: '2.6.0'
+id: 'urn:com:lumalabs:dream-machine:callback'
+info:
+  title: Luma Dream Machine API Callback
+  version: '1.0.0'
+  description: |
+    Server-to-server callback delivered by the Luma Dream Machine API when
+    an asynchronous generation transitions between states. Luma POSTs a
+    JSON document carrying the `Generation` object to a customer-supplied
+    `callback_url` provided at submission time on the generation create
+    endpoints (for example `POST /dream-machine/v1/generations/video`,
+    `/generations/image`, and related modify, reframe, upscale, and audio
+    endpoints).
+
+    The documented surface, taken from the Luma Labs developer
+    documentation (https://docs.lumalabs.ai/) and the
+    "Callbacks & Credits Balance" changelog entry at
+    https://docs.lumalabs.ai/changelog/callbacks-and-credits-balance,
+    states:
+
+      - The callback is an HTTP `POST` request.
+      - The request body is the `Generation` object JSON.
+      - All updates are sent over the callback channel (state, video URL,
+        failure reason).
+      - Luma retries delivery 3 times with a 100ms delay and a 5 second
+        request timeout when the receiver does not return HTTP 200.
+
+    Fields that are not part of the documented callback contract — for
+    example a signed-payload header (no `X-Luma-Signature` is documented
+    at the time of writing), an idempotency key, or a discrete event
+    envelope wrapping the `Generation` object — are intentionally NOT
+    modeled here. The receiver should treat the body as the same
+    `Generation` representation returned by
+    `GET /dream-machine/v1/generations/{id}` and dispatch on the `state`
+    field.
+
+    For details not covered by this AsyncAPI document (per-field schemas
+    of every request variant, error codes, rate limits, billing), consult
+    the corresponding REST OpenAPI definition at
+    `openapi/luma-ai-openapi.yml` and the live docs at
+    https://docs.lumalabs.ai/.
+  contact:
+    name: Luma Labs
+    url: https://docs.lumalabs.ai/
+  license:
+    name: Proprietary
+    url: https://lumalabs.ai/legal/tos
+
+defaultContentType: application/json
+
+servers:
+  customer-callback:
+    url: '{callback_url}'
+    protocol: https
+    description: |
+      Customer-hosted HTTPS endpoint that receives the callback POST.
+      Configured per-generation via the `callback_url` parameter on the
+      Dream Machine generation create endpoints (video, image, modify,
+      reframe, upscale, add-audio). The endpoint must return HTTP 200;
+      Luma retries 3 times with a 100ms delay and a 5 second timeout if
+      a non-200 response is observed.
+    variables:
+      callback_url:
+        description: >-
+          Fully qualified HTTPS URL of the customer endpoint that receives
+          the callback POST. Supplied on the generation request body as
+          the `callback_url` field.
+        default: https://example.com/luma/callback
+
+channels:
+  generation-callback:
+    description: |
+      The customer endpoint that receives one HTTP POST from Luma each
+      time a generation transitions to a state that Luma reports
+      out-of-band. The same channel carries every documented `state`
+      value for every generation type (video, image, modify, reframe,
+      upscale, add-audio); the receiver dispatches on the `state` field
+      of the `Generation` payload.
+
+      Receivers should return HTTP 200 as soon as the payload has been
+      durably accepted. Non-200 responses, timeouts longer than 5
+      seconds, or transport errors cause Luma to retry up to 3 times
+      with a 100ms delay between attempts.
+    bindings:
+      http:
+        type: request
+        method: POST
+    subscribe:
+      summary: >-
+        Receive a Generation state update from the Luma Dream Machine API.
+      operationId: receiveGenerationCallback
+      bindings:
+        http:
+          type: request
+          method: POST
+      message:
+        $ref: '#/components/messages/GenerationCallback'
+
+components:
+  messages:
+    GenerationCallback:
+      name: GenerationCallback
+      title: Generation state callback
+      summary: >-
+        A Generation object delivered by Luma when a generation
+        transitions to a new state (for example `dreaming`, `completed`,
+        or `failed`).
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+      payload:
+        $ref: '#/components/schemas/Generation'
+      examples:
+        - name: completed-video
+          summary: A completed text-to-video generation
+          payload:
+            id: 'd1ad97c4-9d8f-4e3a-9c2e-3b8c0b9b1e2a'
+            state: completed
+            failure_reason: null
+            created_at: '2026-05-30T12:34:56.000Z'
+            assets:
+              video: 'https://storage.cdn-luma.com/.../generation.mp4'
+            version: ray-2
+            request:
+              prompt: >-
+                A teddy bear in sunglasses playing electric guitar
+                and dancing
+              aspect_ratio: '16:9'
+              loop: false
+        - name: failed-video
+          summary: A failed generation
+          payload:
+            id: 'fbb8c4c1-6f0a-4f9d-8a64-4c6c1f6c9f00'
+            state: failed
+            failure_reason: 'Generation failed due to invalid keyframe asset.'
+            created_at: '2026-05-30T12:34:56.000Z'
+            assets: null
+            request:
+              prompt: 'A surfer riding a wave at sunset'
+
+  schemas:
+    Generation:
+      type: object
+      description: |
+        The Generation object as returned by `GET /dream-machine/v1/generations/{id}`
+        and POSTed verbatim to the customer `callback_url`. Only fields
+        whose presence is supported by the public Luma developer
+        documentation are modeled here.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the generation.
+        state:
+          type: string
+          description: |
+            Lifecycle state of the generation. Documented values include
+            `dreaming` (in progress), `completed` (success), and `failed`.
+          enum:
+            - dreaming
+            - completed
+            - failed
+        failure_reason:
+          type:
+            - string
+            - 'null'
+          description: >-
+            Human-readable failure description when `state` is `failed`.
+            `null` for non-failed states.
+        created_at:
+          type: string
+          format: date-time
+          description: ISO-8601 timestamp at which the generation was created.
+        assets:
+          oneOf:
+            - $ref: '#/components/schemas/GenerationAssets'
+            - type: 'null'
+          description: >-
+            Resulting media assets. Populated when `state` is
+            `completed`. May be `null` for in-progress or failed
+            generations.
+        version:
+          type: string
+          description: >-
+            Model identifier used to produce the generation (for example
+            `ray-2`).
+        request:
+          $ref: '#/components/schemas/GenerationRequestEcho'
+      required:
+        - id
+        - state
+
+    GenerationAssets:
+      type: object
+      description: |
+        URLs to the rendered media produced by the generation. The set
+        of fields varies by generation type; only `video` and `image`
+        are documented as members of the assets object.
+      properties:
+        video:
+          type: string
+          format: uri
+          description: HTTPS URL to the generated video file (video generations).
+        image:
+          type: string
+          format: uri
+          description: HTTPS URL to the generated image file (image generations).
+
+    GenerationRequestEcho:
+      type: object
+      description: |
+        Echo of the original request body that produced this generation.
+        The shape mirrors the request body sent to the corresponding
+        REST endpoint; only fields explicitly documented for Dream
+        Machine generations are listed here. Additional request fields
+        observed in the live response (for example `model`, `duration`,
+        `resolution`, or modify/reframe-specific inputs) are permitted
+        via `additionalProperties: true`.
+      additionalProperties: true
+      properties:
+        prompt:
+          type: string
+          description: Natural-language prompt provided at submission.
+        aspect_ratio:
+          type: string
+          description: >-
+            Aspect ratio of the requested output (for example `16:9`,
+            `9:16`, `1:1`).
+        loop:
+          type: boolean
+          description: Whether the resulting video should loop.
+        keyframes:
+          type: object
+          description: >-
+            Keyframe inputs for video generation (`frame0`, `frame1`),
+            each carrying a `type` and a referenced asset URL or
+            generation id. See the REST OpenAPI for full schema.
+          additionalProperties: true
+        callback_url:
+          type: string
+          format: uri
+          description: >-
+            The callback URL originally supplied on the generation
+            create request. Echoed when present in the request body.
