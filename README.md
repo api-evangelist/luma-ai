@@ -1,34 +1,81 @@
 # Luma AI (luma-ai)
 
-Luma AI builds generative video (Dream Machine / Ray) and image (Photon) models, plus agent and 3D capture products. The Dream Machine API exposes REST endpoints for video and image generation with submit + poll semantics.
+Luma AI builds generative video (Dream Machine / Ray) and image (Photon) models, plus agent and 3D capture products. The Dream Machine API exposes REST endpoints for video and image generation with submit + poll semantics, an agent uni-1 model, and SDKs for Python, JavaScript, Go, and a CLI. Pricing is per-second for video and per-request or per-pixel for images.
 
-**APIs.json:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/luma-ai/refs/heads/main/apis.yml)
-
-## Type
-- **x-type:** company
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/luma-ai/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/luma-ai/refs/heads/main/apis.yml)
 
 ## Tags
-- AI, Video Generation, Image Generation, 3D, Dream Machine, Multimodal
+
+- AI
+- Video Generation
+- Image Generation
+- 3D
+- Dream Machine
+- Multimodal
+
+## Timestamps
+
+- **Created:** 2026-05-08
+- **Modified:** 2026-05-30
 
 ## APIs
-1. **Luma Dream Machine API** — video (Ray) + image (Photon) generation at `https://api.lumalabs.ai/dream-machine/v1`.
-2. **Luma Agents API (uni-1)** — agent-style image gen/edit at `https://agents.lumalabs.ai/v1`.
+
+### Luma Dream Machine API
+
+REST API for video (Ray series) and image (Photon) generation. Submit a generation request, then poll for status. Documentation at https://docs.lumalabs.ai/. Auth via API key from https://lumalabs.ai/dream-machine/api/keys.
+
+- **Human URL:** [https://docs.lumalabs.ai/](https://docs.lumalabs.ai/)
+- **Base URL:** `https://api.lumalabs.ai/dream-machine/v1`
+
+#### Tags
+
+- Video Generation
+- Image Generation
+- Ray
+- Photon
+- Dream Machine
+
+#### Properties
+
+- [Documentation](https://docs.lumalabs.ai/)
+- [Sign Up](https://lumalabs.ai/dream-machine/api/keys)
+- [Pricing](https://lumalabs.ai/dream-machine/api/billing/overview)
+- [Status Page](https://status.lumalabs.ai/)
+- [AsyncAPI](asyncapi/luma-ai-callback-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
+- [Postman Collection](collections/luma-ai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/luma-ai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### Luma Agents API (uni-1)
+
+Agent-style image generation/editing with a reasoning endpoint and a generation endpoint. Uses /v1/generations submit and /v1/generations/{generation_id} polling pattern at https://agents.lumalabs.ai/v1.
+
+- **Human URL:** [https://docs.agents.lumalabs.ai/](https://docs.agents.lumalabs.ai/)
+- **Base URL:** `https://agents.lumalabs.ai/v1`
+
+#### Tags
+
+- Agents
+- Image Generation
+- Image Editing
+
+#### Properties
+
+- [Documentation](https://docs.agents.lumalabs.ai/)
+- [Postman Collection](collections/luma-ai.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/luma-ai.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
+
+- [GitHub Organization](https://github.com/lumalabs)
+- [LinkedIn](https://www.linkedin.com/company/luma-ai)
 - [Website](https://lumalabs.ai/)
 - [Documentation](https://docs.lumalabs.ai/)
-- [Plans](plans/luma-ai-plans-pricing.yml) — reconciled
-- [RateLimits](rate-limits/luma-ai-rate-limits.yml) — partial
-- [FinOps](finops/luma-ai-finops.yml) — reconciled
-
-## Pricing Snapshot
-- Build (PAYG): Ray-2 video $0.08/sec; uni-1 image $0.0404/req (2048px); image edit $0.0434/req
-- With image references: $0.0434–$0.0644 per request
-- Photon: $0.32 per million pixels generated
-- Scale: provisioned throughput $2,100–$3,800/month per unit (8-unit minimum)
-- Enterprise: custom
+- [Plans](plans/luma-ai-plans-pricing.yml)
+- [Rate Limits](rate-limits/luma-ai-rate-limits.yml)
+- [Fin Ops](finops/luma-ai-finops.yml)
+- [L L Ms Txt](https://docs.lumalabs.ai/llms.txt)
 
 ## Maintainers
-**FN:** Kin Lane
 
+**FN:** Kin Lane
 **Email:** kin@apievangelist.com
