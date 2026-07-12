@@ -63,6 +63,10 @@ apis:
       - type: Documentation
         url: https://docs.agents.lumalabs.ai/
 common:
+  - type: DomainSecurity
+    url: security/luma-ai-domain-security.yml
+  - type: Authentication
+    url: authentication/luma-ai-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/lumalabs
   - type: LinkedIn
