@@ -63,6 +63,8 @@ apis:
       - type: Documentation
         url: https://docs.agents.lumalabs.ai/
 common:
+  - type: AgenticAccess
+    url: agentic-access/luma-ai-agentic-access.yml
   - type: DomainSecurity
     url: security/luma-ai-domain-security.yml
   - type: Authentication
