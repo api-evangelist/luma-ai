@@ -8,7 +8,20 @@ description: >-
   image generation with submit + poll semantics, an agent uni-1 model, and SDKs for Python,
   JavaScript, Go, and a CLI. Pricing is per-second for video and per-request or per-pixel
   for images.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: paid
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Paid · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/luma-ai.png
 tags:
   - AI
   - Video Generation
@@ -20,48 +33,106 @@ created: '2026-05-08'
 modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
-  - aid: luma-ai:dream-machine
-    name: Luma Dream Machine API
-    description: >-
-      REST API for video (Ray series) and image (Photon) generation. Submit a generation
-      request, then poll for status. Documentation at https://docs.lumalabs.ai/. Auth via
-      API key from https://lumalabs.ai/dream-machine/api/keys.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.lumalabs.ai/
-    baseURL: https://api.lumalabs.ai/dream-machine/v1
-    tags:
-      - Video Generation
-      - Image Generation
-      - Ray
-      - Photon
-      - Dream Machine
-    properties:
-      - type: Documentation
-        url: https://docs.lumalabs.ai/
-      - type: Signup
-        url: https://lumalabs.ai/dream-machine/api/keys
-      - type: Pricing
-        url: https://lumalabs.ai/dream-machine/api/billing/overview
-      - type: StatusPage
-        url: https://status.lumalabs.ai/
-      - type: AsyncAPI
-        url: asyncapi/luma-ai-callback-asyncapi.yml
-  - aid: luma-ai:agents-uni
-    name: Luma Agents API (uni-1)
-    description: >-
-      Agent-style image generation/editing with a reasoning endpoint and a generation
-      endpoint. Uses /v1/generations submit and /v1/generations/{generation_id} polling
-      pattern at https://agents.lumalabs.ai/v1.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://docs.agents.lumalabs.ai/
-    baseURL: https://agents.lumalabs.ai/v1
-    tags:
-      - Agents
-      - Image Generation
-      - Image Editing
-    properties:
-      - type: Documentation
-        url: https://docs.agents.lumalabs.ai/
+- aid: luma-ai:dream-machine
+  name: Luma Dream Machine API
+  description: >-
+    REST API for video (Ray series) and image (Photon) generation. Submit a generation request, then poll
+    for status. Documentation at https://docs.lumalabs.ai/. Auth via API key from https://lumalabs.ai/dream-machine/api/keys.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - Video Generation
+  - Image Generation
+  - Ray
+  - Photon
+  - Dream Machine
+  properties:
+  - type: Documentation
+    url: https://docs.lumalabs.ai/
+  - type: Signup
+    url: https://lumalabs.ai/dream-machine/api/keys
+  - type: Pricing
+    url: https://lumalabs.ai/dream-machine/api/billing/overview
+  - type: StatusPage
+    url: https://status.lumalabs.ai/
+  - type: AsyncAPI
+    url: asyncapi/luma-ai-callback-asyncapi.yml
+- aid: luma-ai:agents-uni
+  name: Luma Agents API (uni-1)
+  description: >-
+    Agent-style image generation/editing with a reasoning endpoint and a generation endpoint. Uses /v1/generations
+    submit and /v1/generations/{generation_id} polling pattern at https://agents.lumalabs.ai/v1.
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.agents.lumalabs.ai/
+  baseURL: https://agents.lumalabs.ai/v1
+  tags:
+  - Agents
+  - Image Generation
+  - Image Editing
+  properties:
+  - type: Documentation
+    url: https://docs.agents.lumalabs.ai/
+- aid: luma-ai:luma-ai-concepts-api
+  name: Luma AI Concepts API
+  description: The Concepts API from Luma AI — 1 operation(s) for concepts.
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - Concepts
+  properties:
+  - type: OpenAPI
+    url: openapi/luma-ai-concepts-api-openapi.yml
+- aid: luma-ai:luma-ai-credits-api
+  name: Luma AI Credits API
+  description: The Credits API from Luma AI — 1 operation(s) for credits.
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - Credits
+  properties:
+  - type: OpenAPI
+    url: openapi/luma-ai-credits-api-openapi.yml
+- aid: luma-ai:luma-ai-generations-api
+  name: Luma AI Generations API
+  description: The Generations API from Luma AI — 4 operation(s) for generations.
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - Generations
+  properties:
+  - type: OpenAPI
+    url: openapi/luma-ai-generations-api-openapi.yml
+- aid: luma-ai:luma-ai-image-api
+  name: Luma AI Image API
+  description: The Image API from Luma AI — 2 operation(s) for image.
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - Image
+  properties:
+  - type: OpenAPI
+    url: openapi/luma-ai-image-api-openapi.yml
+- aid: luma-ai:luma-ai-system-api
+  name: Luma AI System API
+  description: The System API from Luma AI — 1 operation(s) for system.
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/luma-ai-system-api-openapi.yml
+- aid: luma-ai:luma-ai-video-api
+  name: Luma AI Video API
+  description: The Video API from Luma AI — 3 operation(s) for video.
+  humanURL: https://docs.lumalabs.ai/
+  baseURL: https://api.lumalabs.ai/dream-machine/v1
+  tags:
+  - Video
+  properties:
+  - type: OpenAPI
+    url: openapi/luma-ai-video-api-openapi.yml
 common:
   - type: AgenticAccess
     url: agentic-access/luma-ai-agentic-access.yml
