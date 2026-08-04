@@ -1,0 +1,24 @@
+{
+  "provider": "luma-ai",
+  "sources": [
+    "luma-ai-concepts-api-openapi.yml",
+    "luma-ai-credits-api-openapi.yml",
+    "luma-ai-generations-api-openapi.yml",
+    "luma-ai-image-api-openapi.yml",
+    "luma-ai-system-api-openapi.yml",
+    "luma-ai-video-api-openapi.yml"
+  ],
+  "outputs": [
+    "luma-ai-concepts-api-openapi.yml",
+    "luma-ai-credits-api-openapi.yml",
+    "luma-ai-generations-api-openapi.yml",
+    "luma-ai-image-api-openapi.yml",
+    "luma-ai-system-api-openapi.yml",
+    "luma-ai-video-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
