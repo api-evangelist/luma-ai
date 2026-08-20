@@ -23,6 +23,13 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/luma-ai.png
 tags:
+  - Artificial Intelligence
+  - Video Generation
+  - Image-Generation
+  - 3D
+  - Dream Machine
+  - Multi-Modal
+tags_raw:
   - AI
   - Video Generation
   - Image Generation
@@ -42,6 +49,12 @@ apis:
   humanURL: https://docs.lumalabs.ai/
   baseURL: https://api.lumalabs.ai/dream-machine/v1
   tags:
+  - Video Generation
+  - Image-Generation
+  - Ray
+  - Photon
+  - Dream Machine
+  tags_raw:
   - Video Generation
   - Image Generation
   - Ray
@@ -67,6 +80,10 @@ apis:
   humanURL: https://docs.agents.lumalabs.ai/
   baseURL: https://agents.lumalabs.ai/v1
   tags:
+  - Agents
+  - Image-Generation
+  - Image Editing
+  tags_raw:
   - Agents
   - Image Generation
   - Image Editing
