@@ -8,6 +8,18 @@ description: >-
   image generation with submit + poll semantics, an agent uni-1 model, and SDKs for Python,
   JavaScript, Go, and a CLI. Pricing is per-second for video and per-request or per-pixel
   for images.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
