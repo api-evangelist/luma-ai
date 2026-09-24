@@ -19,6 +19,14 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "luma-ai-concepts-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "luma-ai-credits-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "luma-ai-generations-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "luma-ai-image-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "luma-ai-system-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "luma-ai-video-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }
